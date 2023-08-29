@@ -50,3 +50,13 @@ Options:
                                       for more information.
   --help                              Show this message and exit.
 ```
+
+## Mapbox TerrainRGB example
+```
+rio rgbify -e mapbox -b -10000 -i 0.1 --min-z 0 --max-z 8 -j 24 --format png SRC_PATH.vrt DST_PATH.mbtiles
+```
+
+## Mapzen Terrarium example
+```
+rio rgbify  -e terrarium --min-z 0 --max-z 8 -j 24 --format png SRC_PATH.vrt DST_PATH.mbtiles
+```
