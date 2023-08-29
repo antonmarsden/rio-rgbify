@@ -29,23 +29,24 @@ pip install -e '.[test]'
 Usage: rio rgbify [OPTIONS] SRC_PATH DST_PATH
 
 Options:
-  -b, --base-val FLOAT   The base value of which to base the output encoding
-                         on [DEFAULT=0]
-  -i, --interval FLOAT   Describes the precision of the output, by
-                         incrementing interval [DEFAULT=1]
-  -r, --round-digits     Less significants encoded bits to be set
-                         to 0. Round the values, but have better
-                         images compression [DEFAULT=0]
-  --bidx INTEGER         Band to encode [DEFAULT=1]
-  --max-z INTEGER        Maximum zoom to tile (.mbtiles output only)
-  --bounding-tile TEXT   Bounding tile '[{x}, {y}, {z}]' to limit output tiles
-                         (.mbtiles output only)
-  --min-z INTEGER        Minimum zoom to tile (.mbtiles output only)
-  --format [png|webp]    Output tile format (.mbtiles output only)
-  -j, --workers INTEGER  Workers to run [DEFAULT=4]
+  -b, --base-val FLOAT                The base value of which to base the output
+                                      encoding on [DEFAULT=0]
+  -i, --interval FLOAT                Describes the precision of the output, by
+                                      incrementing interval [DEFAULT=1]
+  -r, --round-digits INTEGER          Less significants encoded bits to be set to
+                                      0. Round the values, but have better images
+                                      compression [DEFAULT=0]
+  -e, --encoding [mapbox|terrarium]   RGB encoding to use on the tiles
+  --bidx INTEGER                      Band to encode [DEFAULT=1]
+  --max-z INTEGER                     Maximum zoom to tile (.mbtiles output only)
+  --bounding-tile TEXT                Bounding tile '[{x}, {y}, {z}]' to limit
+                                      output tiles (.mbtiles output only)
+  --min-z INTEGER                     Minimum zoom to tile (.mbtiles output only)
+  --format [png|webp]                 Output tile format (.mbtiles output only)
+  -j, --workers INTEGER               Workers to run [DEFAULT=4]
   -v, --verbose
-  --co NAME=VALUE        Driver specific creation options.See the
-                         documentation for the selected output driver for more
-                         information.
-  --help                 Show this message and exit.
+  --co, --profile NAME=VALUE          Driver specific creation options. See the
+                                      documentation for the selected output driver
+                                      for more information.
+  --help                              Show this message and exit.
 ```
