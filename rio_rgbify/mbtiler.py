@@ -262,7 +262,7 @@ class RGBTiler:
         interval=1,
         base_val=0,
         round_digits=0,
-        encoding="mapbox"
+        encoding="mapbox",
         bounding_tile=None,
         **kwargs
     ):
