@@ -14,7 +14,7 @@ from rio_rgbify.mbtiler import RGBTiler
 
 def _rgb_worker(data, window, ij, g_args):
     return data_to_rgb(
-        data[0][g_args["bidx"] - 1], g_args["base_val"], g_args["interval"], g_args["round_digits"]
+        data[0][g_args["bidx"] - 1], g_args["encoding"], g_args["base_val"], g_args["interval"], g_args["round_digits"]
     )
 
 
@@ -41,6 +41,13 @@ def _rgb_worker(data, window, ij, g_args):
     type=int,
     default=0,
     help="Less significants encoded bits to be set to 0. Round the values, but have better images compression [DEFAULT=0]",
+)
+@click.option(
+    "--encoding",
+    "-e",
+    type=click.Choice(["mapbox", "terrarium"]),
+    default="mapbox",
+    help="RGB encoding to use on the tiles",
 )
 @click.option("--bidx", type=int, default=1, help="Band to encode [DEFAULT=1]")
 @click.option(
@@ -78,6 +85,7 @@ def rgbify(
     base_val,
     interval,
     round_digits,
+    encoding,
     bidx,
     max_z,
     min_z,
@@ -97,7 +105,7 @@ def rgbify(
         for c in creation_options:
             meta[c] = creation_options[c]
 
-        gargs = {"interval": interval, "base_val": base_val, "round_digits": round_digits, "bidx": bidx}
+        gargs = {"interval": interval, "encoding": encoding, "base_val": base_val, "round_digits": round_digits, "bidx": bidx}
 
         with RioMucho(
             [src_path], dst_path, _rgb_worker, options=meta, global_args=gargs
@@ -128,6 +136,7 @@ def rgbify(
             interval=interval,
             base_val=base_val,
             round_digits=round_digits,
+            encoding=encoding,
             format=format,
             bounding_tile=bounding_tile,
             max_z=max_z,

@@ -2,7 +2,7 @@ from __future__ import division
 import numpy as np
 
 
-def data_to_rgb(data, baseval, interval, round_digits=0):
+def data_to_rgb(data, encoding, baseval, interval, round_digits=0):
     """
     Given an arbitrary (rows x cols) ndarray,
     encode the data into uint8 RGB from an arbitrary
@@ -27,8 +27,12 @@ def data_to_rgb(data, baseval, interval, round_digits=0):
         data encoded
     """
     data = data.astype(np.float64)
-    data -= baseval
-    data /= interval
+
+    if(encoding == "terrarium"):
+        data += 32768
+    else:
+        data -= baseval
+        data /= interval
 
     data = np.around(data / 2**round_digits) * 2**round_digits
 
@@ -41,9 +45,14 @@ def data_to_rgb(data, baseval, interval, round_digits=0):
 
     rgb = np.zeros((3, rows, cols), dtype=np.uint8)
 
-    rgb[2] = ((data / 256) - (data // 256)) * 256
-    rgb[1] = (((data // 256) / 256) - ((data // 256) // 256)) * 256
-    rgb[0] = ((((data // 256) // 256) / 256) - (((data // 256) // 256) // 256)) * 256
+    if(encoding == "terrarium"):
+        rgb[0] = floor(data / 256)
+        rgb[1] = floor(data % 256)
+        rgb[2] = floor((data - floor(data)) * 256)
+    else:
+        rgb[0] = ((((data // 256) // 256) / 256) - (((data // 256) // 256) // 256)) * 256
+        rgb[1] = (((data // 256) / 256) - ((data // 256) // 256)) * 256
+        rgb[2] = ((data / 256) - (data // 256)) * 256
 
     return rgb
 
@@ -53,8 +62,10 @@ def _decode(data, base, interval):
     Utility to decode RGB encoded data
     """
     data = data.astype(np.float64)
-    return base + (((data[0] * 256 * 256) + (data[1] * 256) + data[2]) * interval)
-
+    if(encoding == "terrarium"):
+        return (data[0] * 256 + data[1] + data[2] / 256) - 32768
+    else:
+        return base + (((data[0] * 256 * 256) + (data[1] * 256) + data[2]) * interval)
 
 def _range_check(datarange):
     """
