@@ -46,9 +46,9 @@ def data_to_rgb(data, encoding, baseval, interval, round_digits=0):
     rgb = np.zeros((3, rows, cols), dtype=np.uint8)
 
     if(encoding == "terrarium"):
-        rgb[0] = floor(data / 256)
-        rgb[1] = floor(data % 256)
-        rgb[2] = floor((data - floor(data)) * 256)
+        rgb[0] = data // 256
+        rgb[1] = np.floor(data % 256);
+        rgb[2] = np.floor((data - np.floor(data)) * 256)
     else:
         rgb[0] = ((((data // 256) // 256) / 256) - (((data // 256) // 256) // 256)) * 256
         rgb[1] = (((data // 256) / 256) - ((data // 256) // 256)) * 256
