@@ -1,17 +1,10 @@
 # rio-rgbify
 Encode arbitrary bit depth rasters in pseudo base-256 as RGB
 
-[![Build Status](https://travis-ci.org/mapbox/rio-rgbify.svg)](https://travis-ci.org/mapbox/rio-rgbify)[![Coverage Status](https://coveralls.io/repos/github/mapbox/rio-rgbify/badge.svg?branch=its-a-setup)](https://coveralls.io/github/mapbox/rio-rgbify)
-
 ## Installation
 
-### From PyPi
 ```
-pip install rio-rgbify
-```
-### Development
-```
-git clone git@github.com:mapbox/rio-rgbify.git
+git clone https://github.com/acalcutt/rio-rgbify.git
 
 cd rio-rgbify
 
