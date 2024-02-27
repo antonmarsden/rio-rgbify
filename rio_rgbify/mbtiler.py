@@ -405,6 +405,9 @@ class RGBTiler:
 
         conn.commit()
 
+        # disable Wall mode
+        conn.execute('pragma journal_mode=DELETE')
+
         conn.close()
 
         self.pool.close()
