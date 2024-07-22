@@ -142,7 +142,11 @@ def _tile_worker(tile):
         resampling=Resampling.bilinear,
     )
 
-    out = data_to_rgb(out, global_args["encoding"], global_args["base_val"], global_args["interval"], global_args["round_digits"])
+    z_round_digits = global_args["round_digits"]
+    if isinstance(z_round_digits, list):
+        z_round_digits = z_round_digits[z - global_args["min_z"]]
+
+    out = data_to_rgb(out, global_args["encoding"], global_args["base_val"], global_args["interval"], z_round_digits)
 
     return tile, global_args["writer_func"](out, global_args["kwargs"].copy(), toaffine)
 
@@ -235,7 +239,7 @@ class RGBTiler:
     interval: float
         the interval at which to encode
         Default=1
-    round_digits: int
+    round_digits: int | [int]
         Erased less significant digits
         Default=0
     encoding: str
@@ -300,6 +304,8 @@ class RGBTiler:
             "base_val": base_val,
             "interval": interval,
             "round_digits": round_digits,
+            "min_z": min_z,
+            "max_z": max_z,
             "encoding": encoding,
             "writer_func": writer_func,
         }
