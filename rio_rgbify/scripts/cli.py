@@ -38,9 +38,9 @@ def _rgb_worker(data, window, ij, g_args):
 @click.option(
     "--round-digits",
     "-r",
-    type=int,
-    default=0,
-    help="Less significants encoded bits to be set to 0. Round the values, but have better images compression [DEFAULT=0]",
+    type=str,
+    default="0",
+    help="Less significants encoded bits to be set to 0. Round the values, but have better images compression. Use an array if you want to specify rounding digits from min to max zoom level  [DEFAULT=0]",
 )
 @click.option(
     "--encoding",
@@ -121,6 +121,19 @@ def rgbify(
             raise ValueError(
                 "Max zoom {0} must be greater than min zoom {1}".format(max_z, min_z)
             )
+
+        if round_digits is not None:
+            try:
+                round_digits = json.loads(round_digits)
+            except Exception:
+                raise TypeError(
+                    "Rounding digits of {0} is not valid".format(round_digits)
+                )
+            if isinstance(round_digits, list):
+                if len(round_digits) != max_z - min_z + 1:
+                    raise ValueError("Expected {0} rounding digits, got {1}".format(max_z - min_z + 1, len(round_digits)))
+            elif not round_digits.isnumeric():
+                "Rounding digits of {0} is not valid".format(round_digits)
 
         if bounding_tile is not None:
             try:
